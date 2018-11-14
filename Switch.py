@@ -2,8 +2,8 @@
 Defines a python switch with all security measures around variable type. It's done without use of dictionnary but dictionnaries
 maybe better than lists in that kind of problem. 
 Two versions are distributed here:
-    - One done with lists
-    - Another one done with dictionnaries
+    - A version that features only equality cases but int and str type
+    - A version that features both equality and inequality cases but does only support int type
   
  The first function determines if an object is iterable or not.
  The second one determines if a variable of type:
