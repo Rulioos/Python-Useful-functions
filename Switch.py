@@ -4,11 +4,57 @@ maybe better than lists in that kind of problem.
 Two versions are distributed here:
     - One done with lists
     - Another one done with dictionnaries
+  
+ The first function determines if an object is iterable or not.
+ The second one determines if a variable of type:
+    -str
+    -int
+    -np.ndarray
+    -list
+    -range
+    -None
+ is empty ( null ) or not.
 """
 
+
+import numpy as np
+
+#Check if item is iterable
+def isiterable(item):
+    """
+    Check if item is iterable
+    :param item: random object
+    :return:boolean
+    """
+    try:
+        iter(item)
+        return True
+    except TypeError:
+        return False
+    
+#Check if a variable is empty is her type is in the features list
+def void(item):
+    """
+    Determine if an item can be considered as empty
+    :param item: item to evaluate
+    :return: boolean
+    """
+    mapping={int:lambda x:x==0,
+             list:lambda x:len(x)==0,
+             str:lambda x: len(x.replace(" ",""))==0,
+             np.ndarray:lambda x:len(list(x))==0,
+             range: lambda x: len(x)==0,
+             None:True}
+    return mapping[type(item)](item)
+    
+#switch with lists
 def switch(typ,default,cases):
     """
-    
+    Supported types are:
+        -int
+        -str
+     Features only equality case for now.
+     
     :param type: The type of value who will be tested in the switch ( int, str, float ,bin ,list )
     :param default: The default action to take if other conditions are not done
     :param cases: value=action
@@ -62,9 +108,14 @@ s=switch(str,default="Can't understand your words sorry",cases={"Hi":"Hello Worl
 a=s("Hi")
 
 
+#switch with dicts
 def switch_dict(typ, default, cases):
     """
-
+    Supported types are:
+        -int
+        -str
+     Features only equality case for now.
+     
     :param type: The type of value who will be tested in the switch ( int, str, float ,bin ,list )
     :param default: The default action to take if other conditions are not done
     :param cases: value=action
