@@ -18,6 +18,7 @@ Two versions are distributed here:
 
 
 import numpy as np
+import re
 
 #Check if item is iterable
 def isiterable(item):
@@ -127,33 +128,28 @@ def make_int_condition(key):
     :return: a function that holds the wanted condition
     """
 
-    #equality
-    if key.startswith("="):
-        if check_type(int,key[1:]):
-            return lambda x: x == int(key[1:])
-        else: return TypeError
-
-    #Double inequalities
-    if key.startswith("<") and check_type(int, key[1:]):
-        return lambda x: x < int(key[1:])
-    if key.startswith("<=") and check_type(int, key[2:]):
-        return lambda x: x <= int(key[2:])
-    if key.startswith(">") and check_type(int, key[1:]):
-        return lambda x: x >int(key[1:])
-    if key.startswith(">=") and check_type(int, key[2:]):
-        return lambda x: x >= int(key[2:])
-
-    #triple inequalities
-    possible_exp=[r"(.)+<<(.)+",r"(.)+<=<(.)+",r"(.)+<<=(.)+",r"(.)+<=<=(.)+"]
-    for i,item in enumerate(possible_exp):
-        if re.match(item,key) is not None:
-            Values=re.findall("([0-9]+)",key)
-            if i == 0: return lambda x: x in range(int(Values[0])+1,int(Values[1]))
+    #regex of possibles expressions
+    possible_exp = [r"(.)+<<(.)+", r"(.)+<=<(.)+", r"(.)+<<=(.)+", r"(.)+<=<=(.)+",
+                    r"=(.)+", r"<(.)+", r"<=(.)+", r">(.)+", r">=(.)+"]
+    for i, item in enumerate(possible_exp):
+        if re.match(item, key) is not None:
+            Values = re.findall("([0-9]+)", key)
+            #double inequalities
+            if i == 0: return lambda x: x in range(int(Values[0]) + 1, int(Values[1]))
             if i == 1: return lambda x: x in range(int(Values[0]), int(Values[1]))
-            if i == 2: return lambda x: x in range(int(Values[0]) +1, int(Values[1])+1)
-            if i == 3: return lambda x: x in range(int(Values[0]), int(Values[1])+1)
+            if i == 2: return lambda x: x in range(int(Values[0]) + 1, int(Values[1]) + 1)
+            if i == 3: return lambda x: x in range(int(Values[0]), int(Values[1]) + 1)
+            #equality
+            if i == 4: return lambda x: x == int(Values[0])
+            #simple inequality
+            if i == 5: return lambda x: x < int(Values[0])
+            if i == 6: return lambda x: x <= int(Values[0])
+            if i == 7: return lambda x: x > int(Values[0])
+            if i == 8: return lambda x: x >= int(Values[0])
 
     return KeyError
+
+   
 
 
 
