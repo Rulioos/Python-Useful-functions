@@ -46,6 +46,14 @@ def void(item):
              range: lambda x: len(x)==0,
              None:True}
     return mapping[type(item)](item)
+
+def check_type(kind, value):
+    """Check a value type"""
+    try:
+        kind(value)
+        return True
+    except ValueError:
+        return False
     
 #switch with lists
 def switch(typ,default,cases):
@@ -63,13 +71,7 @@ def switch(typ,default,cases):
     def make_condition(cle):
         return lambda x: x==cle
     
-    ddef check_type(kind, value):
-    """Check a value type"""
-    try:
-        kind(value)
-        return True
-    except ValueError:
-        return False
+    
     
     #checking typ is a callable type
     if not callable(typ):return "{} is not a callable type".format(typ)
