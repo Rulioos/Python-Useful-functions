@@ -19,7 +19,7 @@ class Switch:
 
     You can remove some if there is at least one in plus of default one.
 
-        #example
+        s.remove_cases("=-5")
 
     """
     _Layers = []
