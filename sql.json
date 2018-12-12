@@ -1,0 +1,20 @@
+{
+  "queries": [
+    {
+      "table": ["a antecedents"],
+      "columns": ["idpatient","code"],
+      "WHERE": [
+        "idpatient == 4",
+        "code == E11"
+      ]
+    },
+    {
+      "table": ["p patients"],
+      "columns": ["idpatient","code"],
+      "WHERE": [
+        "idpatient == 4",
+        "code == E11"
+      ]
+    }
+  ]
+}
